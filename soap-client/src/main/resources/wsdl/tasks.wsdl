@@ -1,0 +1,55 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://www.fintech.com/task-ws" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.fintech.com/task-ws" targetNamespace="http://www.fintech.com/task-ws">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.fintech.com/task-ws">
+            <xs:element name="getAllTasksRequest">
+                <xs:complexType/>
+            </xs:element>
+            <xs:element name="getAllTasksResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="taskInfo" type="tns:taskInfo"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="taskInfo">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:long"/>
+                    <xs:element name="personId" type="xs:long"/>
+                    <xs:element name="priority" type="xs:int"/>
+                    <xs:element name="priorityName" type="xs:string"/>
+                    <xs:element name="personName" type="xs:string"/>
+                    <xs:element name="classTable" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="getAllTasksRequest">
+        <wsdl:part element="tns:getAllTasksRequest" name="getAllTasksRequest"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getAllTasksResponse">
+        <wsdl:part element="tns:getAllTasksResponse" name="getAllTasksResponse"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="TasksPort">
+        <wsdl:operation name="getAllTasks">
+            <wsdl:input message="tns:getAllTasksRequest" name="getAllTasksRequest"> </wsdl:input>
+            <wsdl:output message="tns:getAllTasksResponse" name="getAllTasksResponse"> </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="TasksPortSoap11" type="tns:TasksPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getAllTasks">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="getAllTasksRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getAllTasksResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="TasksPortService">
+        <wsdl:port binding="tns:TasksPortSoap11" name="TasksPortSoap11">
+            <soap:address location="http://localhost:8888/ws"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
